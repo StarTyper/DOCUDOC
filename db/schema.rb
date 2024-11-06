@@ -10,9 +10,64 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_06_153742) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_06_182045) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "clients", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "documentations", force: :cascade do |t|
+    t.bigint "client_id", null: false
+    t.string "name", null: false
+    t.boolean "favorite", default: false, null: false
+    t.integer "user_id", null: false
+    t.integer "room_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_documentations_on_client_id"
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.bigint "client_id", null: false
+    t.string "name"
+    t.string "country"
+    t.string "state"
+    t.string "zip_code"
+    t.string "street"
+    t.string "street_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_locations_on_client_id"
+  end
+
+  create_table "rooms", force: :cascade do |t|
+    t.bigint "location_id", null: false
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["location_id"], name: "index_rooms_on_location_id"
+  end
+
+  create_table "rows", force: :cascade do |t|
+    t.bigint "section_id", null: false
+    t.string "name", null: false
+    t.string "type", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["section_id"], name: "index_rows_on_section_id"
+  end
+
+  create_table "sections", force: :cascade do |t|
+    t.bigint "documentation_id", null: false
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["documentation_id"], name: "index_sections_on_documentation_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -22,8 +77,30 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_06_153742) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "username", null: false
+    t.string "firstname"
+    t.string "lastname"
+    t.string "role", default: "assistant", null: false
+    t.bigint "client_id"
+    t.index ["client_id"], name: "index_users_on_client_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "values", force: :cascade do |t|
+    t.bigint "row_id", null: false
+    t.text "content"
+    t.boolean "favorite", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["row_id"], name: "index_values_on_row_id"
+  end
+
+  add_foreign_key "documentations", "clients"
+  add_foreign_key "locations", "clients"
+  add_foreign_key "rooms", "locations"
+  add_foreign_key "rows", "sections"
+  add_foreign_key "sections", "documentations"
+  add_foreign_key "users", "clients"
+  add_foreign_key "values", "rows"
 end
