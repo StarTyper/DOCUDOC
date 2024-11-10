@@ -3,14 +3,24 @@
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 #
 #
-# Clear existing users
+# Clear existing clients and users
 User.destroy_all
+Client.destroy_all
 
-# Create sample users
-User.create!(
+# Create admin client
+Client.create!(
   [
-    { email: 'florian.sitte@live.de', password: 'password123', password_confirmation: 'password123', username: 'florian.sitte', firstname: 'Florian', lastname: 'Sitte', role: 'admin' }
+    { name: 'Admin' }
   ]
 )
 
-puts "Users seeded!"
+puts "Admin-Client seeded!"
+
+# Create admin user
+User.create!(
+  [
+    { email: 'florian.sitte@live.de', password: 'password123', password_confirmation: 'password123', username: 'florian.sitte', firstname: 'Florian', lastname: 'Sitte', role: 'admin', client_id: Client.first.id }
+  ]
+)
+
+puts "Admin-User seeded!"
