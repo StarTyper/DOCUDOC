@@ -1,0 +1,21 @@
+<div class="page-container p-3 d-flex justify-content-center">
+  <div class="clients-content">
+    <h1>Clients</h1>
+    <div class="client-cards">
+      <% @clients.each do |client| %>
+        <div class="card" style="width: 18rem;">
+          <%= link_to client_path(client) do %>
+            <div class="card-header">
+              <%= client.name %>
+            </div>
+          <% end %>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">ID: <%= client.id %></li>
+            <li class="list-group-item">Users: <%= client.users.count %></li>
+            <li class="list-group-item">Signed up: <%= client.created_at.strftime("%d-%m-%Y") %></li>
+          </ul>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
