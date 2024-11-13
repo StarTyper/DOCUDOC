@@ -1,6 +1,9 @@
 <div class="page-container p-3 d-flex justify-content-center">
   <div class="clients-content">
     <h1>Clients</h1>
+      <%= link_to new_client_path, class: "btn btn-primary" do %>
+        New Client
+      <% end %>
     <div class="client-cards">
       <% @clients.each do |client| %>
         <div class="card" style="width: 18rem;">

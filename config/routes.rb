@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   get "home", to: "pages#home", as: :home
-  get "clients", to: "clients#index", as: :clients
-  get "clients/show", to: "clients#show", as: :client
+  resources :clients, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
+    resources :projects, only: [:index, :new]
+  end
+  resources :users, only: [:show, :create, :edit, :update, :destroy]
 end

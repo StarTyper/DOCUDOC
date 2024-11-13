@@ -1,5 +1,31 @@
 <div class="page-container p-3 d-flex justify-content-center">
+<!-- button to add users to the client -->
   <div class="clients-content">
     <h1><%= @client.name %></h1>
+    <%= link_to new_user_path(@client), class: "btn btn-primary" do %>
+      Add User
+    <% end %>
+<!-- button to edit the client -->
+    <%= link_to edit_client_path(@client), class: "btn btn-primary" do %>
+      Edit Client
+    <% end %>
+<!-- button to delete the client -->
+    <%= link_to @client, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" do %>
+      Delete Client
+    <% end %>
+<!-- button to go back to the clients index -->
+    <%= link_to 'Back', clients_path, class: "btn btn-primary" %>
+  </div>
+<!-- card with the client's information -->
+  <div class="card" style="width: 18rem;">
+    <div class="card-header">
+      <%= @client.name %>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">ID: <%= @client.id %></li>
+      <li class="list-group-item">Users: <%= @client.users.count %></li>
+      <li class="list-group-item">Signed up: <%= @client.created_at.strftime("%d-%m-%Y") %></li>
+      <li class="list-group-item">Last Edited: <%= @client.updated_at.strftime("%d-%m-%Y") %></li>
+    </ul>
   </div>
 </div>
