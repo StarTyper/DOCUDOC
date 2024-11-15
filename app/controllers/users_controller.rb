@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
   before_action :check_owner, only: [:new, :create]
 
   def new
@@ -16,7 +16,9 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.all
+    @client = Client.find(params[:client_id])
+    @user = current_user
+    @users = User.where(client_id: @client.id)
   end
 
   def edit
@@ -32,7 +34,7 @@ class UsersController < ApplicationController
       render :edit
     end
   end
-  
+
   private
 
   def user_params
@@ -40,8 +42,8 @@ class UsersController < ApplicationController
   end
 
   def check_owner
-    unless current_user && current_user.role == 'owner' || current_user.role == 'admin'
-      redirect_to root_path, alert: 'Not authorized to perform this action.'
-    end
+    return if (current_user && current_user.role == 'owner') || current_user.role == 'admin'
+
+    redirect_to root_path, alert: 'Not authorized to perform this action.'
   end
 end

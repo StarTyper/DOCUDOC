@@ -11,11 +11,11 @@
     <%= f.input :firstname %>
     <%= f.input :lastname %>
 
-    <%= f.input :role, collection: [['Owner', 'owner'], ['Assistant', 'assistant']], include_blank: false %>
+    <%= f.input :role, collection: [['Owner', 'owner'], ['Doctor', 'doctor'], ['Assistant', 'assistant']], include_blank: false %>
 
     <%= f.input :client_id, as: :hidden, input_html: { value: @user.client_id } %>
     <%= f.input :client, as: :string, input_html: { value: Client.find(@user.client_id).name, readonly: true } do %>
-      <span>Client: <%= Client.find(@user.client_id).name %></span>
+      <span> <%= Client.find(@user.client_id).name %></span>
     <% end %>
   </div>
 

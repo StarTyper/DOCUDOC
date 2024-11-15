@@ -12,8 +12,11 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   get "home", to: "pages#home", as: :home
+  get "denied", to: "pages#denied", as: :access_denied
+
   resources :clients, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
     resources :projects, only: [:index, :new]
   end
   resources :users, only: [:new, :create, :index, :edit, :update, :destroy]
+  resources :documentations
 end
