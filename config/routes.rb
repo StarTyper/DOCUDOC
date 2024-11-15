@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  devise_for :users
+  # devise_for :users
+  devise_for :users, skip: :registrations
   root to: "pages#home"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -14,5 +15,5 @@ Rails.application.routes.draw do
   resources :clients, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
     resources :projects, only: [:index, :new]
   end
-  resources :users, only: [:show, :create, :edit, :update, :destroy]
+  resources :users, only: [:new, :create, :index, :edit, :update, :destroy]
 end

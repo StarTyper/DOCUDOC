@@ -1,4 +1,6 @@
 class ClientsController < ApplicationController
+  before_action :authenticate_admin!
+
   def index
     @clients = Client.all
   end
@@ -46,5 +48,12 @@ class ClientsController < ApplicationController
 
   def client_params
     params.require(:client).permit(:name)
+  end
+
+  def authenticate_admin!
+    # Ensure only admins or admins can access
+    unless current_user.role == 'admin'
+      redirect_to root_path, alert: "You are not authorized to access this page."
+    end
   end
 end

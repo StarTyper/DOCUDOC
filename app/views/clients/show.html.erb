@@ -1,10 +1,8 @@
 <div class="page-container p-3 d-flex justify-content-center">
-<!-- button to add users to the client -->
   <div class="clients-content">
     <h1><%= @client.name %></h1>
-    <%= link_to new_user_path(@client), class: "btn btn-primary" do %>
-      Add User
-    <% end %>
+<!-- button to add users to the client -->
+    <%= link_to 'New User', new_user_path(client_id: @client.id), class: 'btn btn-primary' %>
 <!-- button to edit the client -->
     <%= link_to edit_client_path(@client), class: "btn btn-primary" do %>
       Edit Client
@@ -23,7 +21,9 @@
     </div>
     <ul class="list-group list-group-flush">
       <li class="list-group-item">ID: <%= @client.id %></li>
-      <li class="list-group-item">Users: <%= @client.users.count %></li>
+      <%= link_to users_path(client_id: @client.id) do %>
+        <li class="list-group-item">Users: <%= @client.users.count %></li>
+      <% end %>
       <li class="list-group-item">Signed up: <%= @client.created_at.strftime("%d-%m-%Y") %></li>
       <li class="list-group-item">Last Edited: <%= @client.updated_at.strftime("%d-%m-%Y") %></li>
     </ul>
